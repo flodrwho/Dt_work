@@ -36,8 +36,7 @@ mGui.configure(background = 'gray')
 mlabel = Label(mGui,text='Book Stock',fg='red',bg='white')
 mlabel.pack()
 
-#data entry label and Entry field for text and integer. Includes insertion of default values
-#note the text variables as name and gae as declared above
+
 bookEntryl = Label(mGui,text='Book Title',fg='red',bg='white')
 bookEntryl.pack()
 bookEntry = Entry(mGui,textvariable=book)
@@ -51,16 +50,16 @@ copiesEntry.insert(10,1)
 copiesEntry.pack()
 
 #obtain data from a pull down list
-genreEntry1 = Label(mGui, text='What Genre is this book?',fg="red", bg="black")
+genreEntry1 = Label(mGui, text='What Genre is this book?',fg="red", bg="white")
 genreEntry1.pack()
 genreEntry=OptionMenu(mGui, genre, "Science Fiction", "Sport", "Biography", "Political Thriller", "Horror")
 genreEntry.pack()
 
-#OK button ie event used to initiatiate a command ie processdata
+
 mbutton = Button(mGui,text="Submit",command=processdata, fg='red')
 mbutton.pack()
 
-#QUIT button ie event to quit
+
 qbutton = Button(mGui,text="Division by zero detected the universe has ended",command=Quit, fg='red')
 qbutton.pack()
 
