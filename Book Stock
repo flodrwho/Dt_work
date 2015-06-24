@@ -1,0 +1,67 @@
+#load tkinter library
+from tkinter import *
+import tkinter.messagebox  #need to import this
+
+def processdata():
+#process data, note access to tkinter variables
+    ubook=book.get().title()
+    print("Title of Book: " + ubook)
+    bookEntry.delete(0,END)
+    print("Number of Copies: " +str(copies.get()))
+    if genre.get()=="":
+        print("Genre: Unknown")
+    else:
+        print("Genre: " + genre.get())
+    return
+
+def Quit():
+    mExit = messagebox.askokcancel(title="Quit", message="Are you sure")
+    print(mExit)
+    if mExit >0: #1 is True 0 is False
+        mGui.destroy()
+    return
+
+mGui=Tk()
+
+book=StringVar()
+copies=IntVar()
+genre=StringVar()
+
+#primary window
+mGui.geometry('450x450+50+30') #+50 +30 give starting postion on screen
+mGui.title('Book Stock')
+mGui.configure(background = 'gray')
+
+#Simple label used for header
+mlabel = Label(mGui,text='Book Stock',fg='red',bg='white')
+mlabel.pack()
+
+#data entry label and Entry field for text and integer. Includes insertion of default values
+#note the text variables as name and gae as declared above
+bookEntryl = Label(mGui,text='Book Title',fg='red',bg='white')
+bookEntryl.pack()
+bookEntry = Entry(mGui,textvariable=book)
+bookEntry.insert(10,"noname")
+bookEntry.pack()
+
+copiesEntryl = Label(mGui,text='Number of Copies',fg='red',bg='white')
+copiesEntryl.pack()
+copiesEntry = Entry(mGui, textvariable=copies)
+copiesEntry.insert(10,1)
+copiesEntry.pack()
+
+#obtain data from a pull down list
+genreEntry1 = Label(mGui, text='What Genre is this book?',fg="red", bg="black")
+genreEntry1.pack()
+genreEntry=OptionMenu(mGui, genre, "Science Fiction", "Sport", "Biography", "Political Thriller", "Horror")
+genreEntry.pack()
+
+#OK button ie event used to initiatiate a command ie processdata
+mbutton = Button(mGui,text="Submit",command=processdata, fg='red')
+mbutton.pack()
+
+#QUIT button ie event to quit
+qbutton = Button(mGui,text="Division by zero detected the universe has ended",command=Quit, fg='red')
+qbutton.pack()
+
+mGui.mainloop()
