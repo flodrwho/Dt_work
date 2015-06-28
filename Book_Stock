@@ -1,9 +1,19 @@
-#load tkinter library
+#-------------------------------------------------------------------------------
+# Name:        bookLibrary
+# Purpose:     to get input about a book(or multiple) and return the information until the user quits out.
+#
+# Author:      flora edwards
+#
+# Created:     24/06/2015
+# Copyright:   (c) edwardsf 2015
+# Licence:     <your licence>
+#-------------------------------------------------------------------------------
+#!/usr/bin/env python
+
 from tkinter import *
 import tkinter.messagebox  #need to import this
-
+import csv
 def processdata():
-#process data, note access to tkinter variables
     ubook=book.get().title()
     print("Title of Book: " + ubook)
     bookEntry.delete(0,END)
@@ -14,7 +24,10 @@ def processdata():
         print("Genre: " + genre.get())
     return
 
+
+
 def Quit():
+
     mExit = messagebox.askokcancel(title="Quit", message="Are you sure")
     print(mExit)
     if mExit >0: #1 is True 0 is False
@@ -23,44 +36,49 @@ def Quit():
 
 mGui=Tk()
 
+#variable types that are used by tkinter
 book=StringVar()
 copies=IntVar()
 genre=StringVar()
 
 #primary window
-mGui.geometry('450x450+50+30') #+50 +30 give starting postion on screen
+mGui.geometry('300x270+50+30') #+50 +30 give starting postion on screen
 mGui.title('Book Stock')
-mGui.configure(background = 'gray')
+mGui.configure(background = 'rosy brown')
 
 #Simple label used for header
-mlabel = Label(mGui,text='Book Stock',fg='red',bg='white')
-mlabel.pack()
+class GridMashGUI:
+    def __init__(self, parent):
+        mlabel = Label(mGui,text='Book Stock',fg='black',bg='white', padx = 5, pady = 5, font = 24)
+        mlabel.grid(row = 0, column = 0, sticky = 'n', columnspan = 2, padx = 5, pady = 5)
 
+        #data entry label and Entry field for text and integer. Includes insertion of default values
+        #note the text variables as name and gae as declared above
+        bookEntryl = Label(mGui,text='Book Title',fg='black',bg='white', padx = 2, pady = 2)
+        bookEntryl.grid(row = 1, column = 0, sticky = 'w', pady = 10, padx = 10)
+        bookEntry = Entry(mGui,textvariable=book)
+        bookEntry.insert(10,"noname")
+        bookEntry.grid(row = 1, column = 1,  sticky = 'w', pady = 10, padx = 10)
 
-bookEntryl = Label(mGui,text='Book Title',fg='red',bg='white')
-bookEntryl.pack()
-bookEntry = Entry(mGui,textvariable=book)
-bookEntry.insert(10,"noname")
-bookEntry.pack()
+        copiesEntryl = Label(mGui,text='Number of Copies',fg='black',bg='white', padx = 2, pady = 2)
+        copiesEntryl.grid(row = 2, column = 0, sticky = 'w', pady = 10, padx = 10)
+        copiesEntry = Entry(mGui, textvariable=copies)
+        copiesEntry.insert(10,1)
+        copiesEntry.grid(row = 2, column = 1, sticky = 'w', pady = 10, padx = 10)
 
-copiesEntryl = Label(mGui,text='Number of Copies',fg='red',bg='white')
-copiesEntryl.pack()
-copiesEntry = Entry(mGui, textvariable=copies)
-copiesEntry.insert(10,1)
-copiesEntry.pack()
+        #obtain data from a pull down list
+        genreEntry1 = Label(mGui, text='What Genre is this book?',fg="black", bg="white", padx = 2, pady = 2)
+        genreEntry1.grid(row = 3, column = 0, sticky = 'w', pady = 10, padx = 10)
+        genreEntry=OptionMenu(mGui, genre, "Science Fiction", "Sport", "Biography", "Political Thriller", "Horror")
+        genreEntry.grid(row = 3, column = 1, sticky = 'w', pady = 10, padx = 10)
 
-#obtain data from a pull down list
-genreEntry1 = Label(mGui, text='What Genre is this book?',fg="red", bg="white")
-genreEntry1.pack()
-genreEntry=OptionMenu(mGui, genre, "Science Fiction", "Sport", "Biography", "Political Thriller", "Horror")
-genreEntry.pack()
+        #OK button ie event used to initiatiate a command ie processdata
+        mbutton = Button(mGui,text="Submit",command=processdata, fg='black')
+        mbutton.grid(row = 4, column = 0, columnspan = 2, sticky = 's', pady = 5, padx = 10)
 
+        #QUIT button ie event to quit
+        qbutton = Button(mGui,text="Division by zero detected the universe has ended",command=Quit, fg='black')
+        qbutton.grid(row = 5, column = 0, columnspan = 2, sticky = 's', pady = 5, padx = 10)
 
-mbutton = Button(mGui,text="Submit",command=processdata, fg='red')
-mbutton.pack()
-
-
-qbutton = Button(mGui,text="Division by zero detected the universe has ended",command=Quit, fg='red')
-qbutton.pack()
-
+buttons = GridMashGUI(mGui)
 mGui.mainloop()
